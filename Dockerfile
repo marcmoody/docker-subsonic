@@ -19,10 +19,12 @@ RUN ln -s /usr/bin/ffmpeg /var/subsonic/transcode/ffmpeg && \
 
 ENV SUBSONIC_VERSION 5.2.1
 
-USER subsonic
 RUN wget -qO- http://downloads.sourceforge.net/project/subsonic/subsonic/$SUBSONIC_VERSION/subsonic-$SUBSONIC_VERSION-standalone.tar.gz | tar xvz -C /opt/subsonic
 
 RUN sed -i "s/ > \${LOG} 2>&1 &//" /opt/subsonic/subsonic.sh
+
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
